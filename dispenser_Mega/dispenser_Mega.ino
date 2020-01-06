@@ -12,7 +12,7 @@ UTFT        myGLCD(ILI9341_16,38,39,40,41);
 URTouch      myTouch(6,5,4,3,2);
 UTFT_Buttons  myButtons(&myGLCD, &myTouch);
 SoftwareSerial BTSerial(10,11); //RX, TX
-int var = 3 ;
+int var = 0 ;
 int BTval ;
 
 int pressed_button, btnAir, btnStop, btnPause;
@@ -48,10 +48,7 @@ void start(){
   
   while (var == 0){
     if (BTSerial.available()>0){
-     BTval = BTSerial.read();
-     if (BTval == '1'){
-      Serial.println("OKE");
-     }
+     BTval = BTSerial.parseInt();
       var = BTval;
     BTSerial.print("Saldo:");
     BTSerial.print(var);
