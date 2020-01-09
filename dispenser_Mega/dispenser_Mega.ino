@@ -4,6 +4,8 @@
 #include <SoftwareSerial.h>
 
 // Declare which fonts we will be using
+
+extern uint8_t SmallFont[];
 extern uint8_t BigFont[];
 extern uint8_t SevenSegNumFont[];
 
@@ -37,13 +39,15 @@ void setup() {
 void start(){
   myButtons.deleteAllButtons();
  
-  myGLCD.setColor(0, 0, 255);                         
+  myGLCD.setColor(144, 222, 255);
+  myGLCD.setFont(BigFont);
     myGLCD.print("SPAIRUM PROJECT", CENTER, 0);
     myGLCD.print("Tekan Tombol AMBIL", CENTER, 16); 
    btnAir = myButtons.addButton( 10, 50, 300, 30, "Ambil air");
   myButtons.drawButtons();
   myGLCD.print("SALDO:", 10, 150);
   myGLCD.printNumI(var, 130,150);
+  myGLCD.setFont(SevenSegNumFont);
   myGLCD.print("ML",210,150);
   
   while (var == 0){
