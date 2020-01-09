@@ -29,7 +29,7 @@ void setup() {
   myGLCD.setFont(BigFont);
   myTouch.InitTouch();
   myTouch.setPrecision(PREC_MEDIUM);
-    myGLCD.fillScr(255,255,255);
+  myGLCD.fillScr(255,255,255);
   myGLCD.setBackColor(255,255,255);
   //myButtons.setTextFont(BigFont);
   //myGLCD.fillScr(248,255,131);
@@ -42,6 +42,8 @@ void setup() {
 
 void start(){
   myButtons.deleteAllButtons();
+  myGLCD.fillScr(255,255,255);
+  myGLCD.setBackColor(255,255,255);
   myGLCD.setColor(144, 222, 255);
   myGLCD.setFont(BigFont);
   myGLCD.print("SPAIRUM PROJECT", CENTER, 5);
@@ -98,8 +100,8 @@ void start(){
 
 void menu(){
    myGLCD.clrScr();
-  //myGLCD.fillScr(255,255,255);
-  //myGLCD.setBackColor(255,255,255);
+  myGLCD.fillScr(255,255,255);
+  myGLCD.setBackColor(255,255,255);
    if (var == 0){
        digitalWrite(8, HIGH); 
        myGLCD.setColor(205, 0,0);
@@ -111,6 +113,9 @@ void menu(){
     
    }
    myButtons.deleteButton(btnAir);
+   myButtons.setTextFont(arial_bold);
+   myGLCD.print("STOP Untuk menghabiskan TOKEN",LEFT, 5);
+   myGLCD.print("Pause Untuk menjeda pengisisan", LEFT,21);
    btnStop = myButtons.addButton( 190, 50, 120, 70, "STOP");
    btnPause = myButtons.addButton( 190, 130, 120, 70, "PAUSE");
    pressed_button = myButtons.checkButtons();
@@ -131,15 +136,14 @@ while (var > 0) {
           start();
       }
   }
-  myGLCD.setColor(205, 0,0);
-  myGLCD.fillRect(0, 306, 479, 319);
-  myGLCD.print("Tekan Tombol Stop:",LEFT, 0);
-  myGLCD.print("Pause Pengisisan", LEFT,16);
-  myGLCD.setColor(0,10,220);
-  myGLCD.print("SALDO: ", 10, 150);
-  myGLCD.printNumI(var, 130,150,4 ,' ');
-  myGLCD.print("ML",210,150);
-  Serial.println(var);
+  myGLCD.print("TOKEN:", 20, 50);
+  myGLCD.setColor(17, 0, 225);
+  myGLCD.setFont(CalibriBold32x48);
+  //myGLCD.printNumI(var, 20,80,3, ' ');
+  myGLCD.printNumF(var, 20,80,3, ' ');
+  myGLCD.setColor(144, 222, 255);
+  myGLCD.setFont(BigFont);
+  myGLCD.print("x10 ML",35,150);
   
   var--;
   BTSerial.println(var);
