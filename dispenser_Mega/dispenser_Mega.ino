@@ -14,7 +14,7 @@ UTFT        myGLCD(ILI9341_16,38,39,40,41);
 URTouch      myTouch(6,5,4,3,2);
 UTFT_Buttons  myButtons(&myGLCD, &myTouch);
 SoftwareSerial BTSerial(10,11); //RX, TX
-int var = 0 ;
+int var = 3 ;
 int BTval ;
 
 int pressed_button, btnAir, btnStop, btnPause;
@@ -46,8 +46,11 @@ void start(){
    btnAir = myButtons.addButton( 10, 50, 300, 30, "Ambil air");
   myButtons.drawButtons();
   myGLCD.print("SALDO:", 10, 150);
-  myGLCD.printNumI(var, 130,150);
+  myGLCD.setColor(94, 255, 0);
   myGLCD.setFont(SevenSegNumFont);
+  myGLCD.printNumI(var, 130,150);
+  GLCD.setColor(144, 222, 255);
+  myGLCD.setFont(BigFont);
   myGLCD.print("ML",210,150);
   
   while (var == 0){
