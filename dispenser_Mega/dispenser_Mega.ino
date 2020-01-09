@@ -14,7 +14,7 @@ UTFT        myGLCD(ILI9341_16,38,39,40,41);
 URTouch      myTouch(6,5,4,3,2);
 UTFT_Buttons  myButtons(&myGLCD, &myTouch);
 SoftwareSerial BTSerial(10,11); //RX, TX
-int var = 3 ;
+int var = 100 ;
 int BTval ;
 
 int pressed_button, btnAir, btnStop, btnPause;
@@ -29,6 +29,7 @@ void setup() {
   myTouch.InitTouch();
   myTouch.setPrecision(PREC_MEDIUM);
   myButtons.setTextFont(BigFont);
+  //myGLCD.fillScr(248,255,131);
   pinMode(8, OUTPUT);
   digitalWrite(8, HIGH);
   pinMode(9, OUTPUT);
@@ -38,18 +39,20 @@ void setup() {
 
 void start(){
   myButtons.deleteAllButtons();
- 
+  myGLCD.fillScr(255,255,255);
+  myGLCD.setBackColor(255,255,255);
   myGLCD.setColor(144, 222, 255);
   myGLCD.setFont(BigFont);
-    myGLCD.print("SPAIRUM PROJECT", CENTER, 0);
-    myGLCD.print("Tekan Tombol AMBIL", CENTER, 16); 
-   btnAir = myButtons.addButton( 10, 50, 300, 30, "Ambil air");
+  
+  myGLCD.print("SPAIRUM PROJECT", CENTER, 0);
+  myGLCD.print("Tekan Tombol AMBIL", CENTER, 16); 
+  btnAir = myButtons.addButton( 10, 50, 300, 30, "Ambil air");
   myButtons.drawButtons();
   myGLCD.print("SALDO:", 10, 150);
   myGLCD.setColor(94, 255, 0);
   myGLCD.setFont(SevenSegNumFont);
-  myGLCD.printNumI(var, 130,150);
-  GLCD.setColor(144, 222, 255);
+  myGLCD.printNumI(var, 100,150);
+  myGLCD.setColor(144, 222, 255);
   myGLCD.setFont(BigFont);
   myGLCD.print("ML",210,150);
   
