@@ -100,19 +100,11 @@ void start(){
 
 void menu(){
    myGLCD.clrScr();
-  myGLCD.fillScr(255,255,255);
-  myGLCD.setBackColor(255,255,255);
-   if (var == 0){
-       digitalWrite(8, HIGH); 
-       myGLCD.setColor(205, 0,0);
-       myGLCD.setFont(BigFont);
-       myGLCD.print("SALDO HABIS",CENTER,100);
-       delay(2500);
-        myGLCD.clrScr();
-       start();
-    
-   }
+   myGLCD.fillScr(255,255,255);
+   myGLCD.setBackColor(255,255,255);
+   
    myButtons.deleteButton(btnAir);
+   
    myButtons.setTextFont(arial_bold);
    myGLCD.print("STOP Untuk menghabiskan TOKEN",LEFT, 5);
    myGLCD.print("Pause Untuk menjeda pengisisan", LEFT,21);
@@ -139,8 +131,7 @@ while (var > 0) {
   myGLCD.print("TOKEN:", 20, 50);
   myGLCD.setColor(17, 0, 225);
   myGLCD.setFont(CalibriBold32x48);
-  //myGLCD.printNumI(var, 20,80,3, ' ');
-  myGLCD.printNumF(var, 20,80,3, ' ');
+  myGLCD.printNumI(var, 20,80);
   myGLCD.setColor(144, 222, 255);
   myGLCD.setFont(BigFont);
   myGLCD.print("x10 ML",35,150);
@@ -152,14 +143,11 @@ while (var > 0) {
   
        delay(1000);
        digitalWrite(8, HIGH); 
-        myGLCD.clrScr();
+        //myGLCD.clrScr();
           start();
         
-  }
-
-void TopUP(){
-  
 }
+
 
 void loop() {
   boolean default_colors = true;
