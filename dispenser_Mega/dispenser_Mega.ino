@@ -42,8 +42,8 @@ void setup() {
 
 void start(){
   myButtons.deleteAllButtons();
-  myGLCD.fillScr(255,255,255);
-  myGLCD.setBackColor(255,255,255);
+  myGLCD.fillScr(0,0,0);
+  myGLCD.setBackColor(0,0,0);
   myGLCD.setColor(144, 222, 255);
   myGLCD.setFont(BigFont);
   myGLCD.print("SPAIRUM PROJECT", CENTER, 5);
