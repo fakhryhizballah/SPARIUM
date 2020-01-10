@@ -100,8 +100,8 @@ void start(){
 
 void menu(){
    myGLCD.clrScr();
-   myGLCD.fillScr(255,255,255);
-   myGLCD.setBackColor(255,255,255);
+     myGLCD.fillScr(0,0,0);
+  myGLCD.setBackColor(0,0,0);
    
    myButtons.deleteButton(btnAir);
    
