@@ -5,16 +5,17 @@
 
 // Declare which fonts we will be using
 
-extern uint8_t SmallFont[];
+extern uint8_t GroteskBold16x32[];
 extern uint8_t BigFont[];
-extern uint8_t SevenSegNumFont[];
+extern uint8_t CalibriBold32x48[];
+extern uint8_t arial_bold[];
 
 
 UTFT        myGLCD(ILI9341_16,38,39,40,41); 
 URTouch      myTouch(6,5,4,3,2);
 UTFT_Buttons  myButtons(&myGLCD, &myTouch);
 SoftwareSerial BTSerial(10,11); //RX, TX
-int var = 0 ;
+int var = 40 ;
 int BTval ;
 
 int pressed_button, btnAir, btnStop, btnPause;
@@ -28,7 +29,10 @@ void setup() {
   myGLCD.setFont(BigFont);
   myTouch.InitTouch();
   myTouch.setPrecision(PREC_MEDIUM);
-  myButtons.setTextFont(BigFont);
+  myGLCD.fillScr(255,255,255);
+  myGLCD.setBackColor(255,255,255);
+  //myButtons.setTextFont(BigFont);
+  //myGLCD.fillScr(248,255,131);
   pinMode(8, OUTPUT);
   digitalWrite(8, HIGH);
   pinMode(9, OUTPUT);
@@ -38,17 +42,24 @@ void setup() {
 
 void start(){
   myButtons.deleteAllButtons();
- 
+  myGLCD.fillScr(255,255,255);
+  myGLCD.setBackColor(255,255,255);
   myGLCD.setColor(144, 222, 255);
   myGLCD.setFont(BigFont);
-    myGLCD.print("SPAIRUM PROJECT", CENTER, 0);
-    myGLCD.print("Tekan Tombol AMBIL", CENTER, 16); 
-   btnAir = myButtons.addButton( 10, 50, 300, 30, "Ambil air");
+  myGLCD.print("SPAIRUM PROJECT", CENTER, 5);
+  myButtons.setTextFont(arial_bold);
+  myGLCD.print("Tekan Start AMBIL", CENTER, 21);
+  myButtons.setTextFont(arial_bold); 
+  btnAir = myButtons.addButton( 190, 50, 120, 70, "START");
   myButtons.drawButtons();
-  myGLCD.print("SALDO:", 10, 150);
-  myGLCD.printNumI(var, 130,150);
-  myGLCD.setFont(SevenSegNumFont);
-  myGLCD.print("ML",210,150);
+  myButtons.setTextFont(arial_bold);
+  myGLCD.print("TOKEN:", 20, 50);
+  myGLCD.setColor(17, 0, 225);
+  myGLCD.setFont(CalibriBold32x48);
+  myGLCD.printNumI(var, 20,80);
+  myGLCD.setColor(144, 222, 255);
+  myGLCD.setFont(BigFont);
+  myGLCD.print("x10 ML",35,150);
   
   while (var == 0){
     if (BTSerial.available()>0){
@@ -56,12 +67,11 @@ void start(){
       var = BTval;
     BTSerial.print("Saldo:");
     BTSerial.print(var);
-    BTSerial.print(BTval);
-    BTSerial.println();
-    Serial.print(BTval);
+    //BTSerial.print(BTval);
+    //BTSerial.println();
+    //Serial.print(BTval);
     start();
     }
-   
   
    if (Serial.available()){
     int val = Serial.parseInt();
@@ -88,23 +98,18 @@ void start(){
   }
 }
 
-
-
 void menu(){
    myGLCD.clrScr();
-   if (var == 0){
-       digitalWrite(8, HIGH); 
-       myGLCD.setColor(205, 0,0);
-       myGLCD.setFont(BigFont);
-       myGLCD.print("SALDO HABIS",CENTER,100);
-       delay(2500);
-        myGLCD.clrScr();
-       start();
-    
-   }
+   myGLCD.fillScr(255,255,255);
+   myGLCD.setBackColor(255,255,255);
+   
    myButtons.deleteButton(btnAir);
-   btnStop = myButtons.addButton( 10, 50, 75, 75, "STOP");
-   btnPause = myButtons.addButton( 95, 50, 85, 75, "PAUSE");
+   
+   myButtons.setTextFont(arial_bold);
+   myGLCD.print("STOP Untuk menghabiskan TOKEN",LEFT, 5);
+   myGLCD.print("Pause Untuk menjeda pengisisan", LEFT,21);
+   btnStop = myButtons.addButton( 190, 50, 120, 70, "STOP");
+   btnPause = myButtons.addButton( 190, 130, 120, 70, "PAUSE");
    pressed_button = myButtons.checkButtons();
     myButtons.drawButtons();
   
@@ -123,15 +128,13 @@ while (var > 0) {
           start();
       }
   }
-  myGLCD.setColor(205, 0,0);
-  myGLCD.fillRect(0, 306, 479, 319);
-  myGLCD.print("Tekan Tombol Stop:",LEFT, 0);
-  myGLCD.print("Pause Pengisisan", LEFT,16);
-  myGLCD.setColor(0,10,220);
-  myGLCD.print("SALDO: ", 10, 150);
-  myGLCD.printNumI(var, 130,150,4 ,' ');
-  myGLCD.print("ML",210,150);
-  Serial.println(var);
+  myGLCD.print("TOKEN:", 20, 50);
+  myGLCD.setColor(17, 0, 225);
+  myGLCD.setFont(CalibriBold32x48);
+  myGLCD.printNumI(var, 20,80, 4,'0');
+  myGLCD.setColor(144, 222, 255);
+  myGLCD.setFont(BigFont);
+  myGLCD.print("x10 ML",35,150);
   
   var--;
   BTSerial.println(var);
@@ -140,14 +143,11 @@ while (var > 0) {
   
        delay(1000);
        digitalWrite(8, HIGH); 
-        myGLCD.clrScr();
+        //myGLCD.clrScr();
           start();
         
-  }
-
-void TopUP(){
-  
 }
+
 
 void loop() {
   boolean default_colors = true;
