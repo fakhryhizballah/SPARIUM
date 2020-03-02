@@ -114,16 +114,16 @@ void menu(){
     myButtons.drawButtons();
   
 while (var > 0) {
-  digitalWrite(8, LOW);
+  digitalWrite(8, HIGH);
   if (myTouch.dataAvailable() == true){
       pressed_button = myButtons.checkButtons();
       if (pressed_button==btnStop){
-        digitalWrite(8, HIGH);
+        digitalWrite(8, LOW);
         var = 1;
       }
       if (pressed_button==btnPause){
         var = var;
-        digitalWrite(8, HIGH); 
+        digitalWrite(8, LOW); 
         myGLCD.clrScr();
           start();
       }
@@ -142,7 +142,7 @@ while (var > 0) {
 }
   
        delay(1000);
-       digitalWrite(8, HIGH); 
+       digitalWrite(8, LOW); 
         //myGLCD.clrScr();
           start();
         
