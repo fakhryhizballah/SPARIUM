@@ -15,8 +15,10 @@ UTFT        myGLCD(ILI9341_16,38,39,40,41);
 URTouch      myTouch(6,5,4,3,2);
 UTFT_Buttons  myButtons(&myGLCD, &myTouch);
 SoftwareSerial BTSerial(10,11); //RX, TX
-int var = 40 ;
+int var = 1 ;
+int val = 200;
 int BTval ;
+
 
 int pressed_button, btnAir, btnStop, btnPause;
 void setup() {
@@ -24,23 +26,26 @@ void setup() {
   Serial.begin(9600);
   Serial.print(" I received:"); 
   BTSerial.print(" BTS Tersambung");  
-  myGLCD.InitLCD();
+  myGLCD.InitLCD(1);
+  
   myGLCD.clrScr();
   myGLCD.setFont(BigFont);
-  myTouch.InitTouch();
+  myTouch.InitTouch(1);
   myTouch.setPrecision(PREC_MEDIUM);
+  //myGLCD.rotateDisplay(true);
   myGLCD.fillScr(255,255,255);
   myGLCD.setBackColor(255,255,255);
   //myButtons.setTextFont(BigFont);
   //myGLCD.fillScr(248,255,131);
-  pinMode(8, OUTPUT);
-  digitalWrite(8, HIGH);
+  //pinMode(8, OUTPUT);
+  //digitalWrite(8, HIGH);
   pinMode(9, OUTPUT);
-  digitalWrite(9, HIGH);
+  digitalWrite(9, LOW);
 
 }
 
 void start(){
+
   myButtons.deleteAllButtons();
   myGLCD.fillScr(255,255,255);
   myGLCD.setBackColor(255,255,255);
@@ -74,10 +79,9 @@ void start(){
     }
   
    if (Serial.available()){
-    int val = Serial.parseInt();
-      var = val;
-    Serial.print("Saldo:");
-    Serial.print(var);
+    val = Serial.parseInt();
+    Serial.print("cal");
+    Serial.print(val);
     Serial.println();
     BTSerial.print(val);
     start();
@@ -106,15 +110,15 @@ void menu(){
    myButtons.deleteButton(btnAir);
    
    myButtons.setTextFont(arial_bold);
-   myGLCD.print("STOP Untuk menghabiskan TOKEN",LEFT, 5);
-   myGLCD.print("Pause Untuk menjeda pengisisan", LEFT,21);
+   myGLCD.print("STOP TOKEN",LEFT, 5);
+   myGLCD.print("Pause ", LEFT,21);
    btnStop = myButtons.addButton( 190, 50, 120, 70, "STOP");
    btnPause = myButtons.addButton( 190, 130, 120, 70, "PAUSE");
    pressed_button = myButtons.checkButtons();
     myButtons.drawButtons();
   
 while (var > 0) {
-  digitalWrite(8, HIGH);
+  digitalWrite(8, val);
   if (myTouch.dataAvailable() == true){
       pressed_button = myButtons.checkButtons();
       if (pressed_button==btnStop){
@@ -138,7 +142,7 @@ while (var > 0) {
   
   var--;
   BTSerial.println(var);
-  delay(0.0005);
+  delay(250);
 }
   
        delay(1000);

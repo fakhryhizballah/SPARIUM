@@ -2,7 +2,7 @@
 SoftwareSerial sim(3, 2);
 int _timeout;
 String _buffer;
-String number = "+6281998081123"; //-> change with your number
+String number = "+62895373130201"; //-> change with your number
 void setup() {
   delay(7000); //delay for 7 seconds to make sure the modules get the signal
   Serial.begin(9600);
@@ -21,7 +21,7 @@ void loop() {
         break;
       case 'r':
         RecieveMessage();
-        break;
+        
       case 'c':
         callNumber();
         break;
